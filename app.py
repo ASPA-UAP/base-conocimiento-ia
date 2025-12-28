@@ -3,7 +3,7 @@ import re
 import datetime as dt
 import streamlit as st
 from openai import OpenAI
-import psycopg
+import psycopg2
 
 # ---------------------------
 # Config / Secrets
@@ -30,7 +30,7 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 # Helpers
 # ---------------------------
 def connect_db():
-    return psycopg.connect(
+    return psycopg2.connect(
         host=DB_HOST,
         port=DB_PORT,
         dbname=DB_NAME,
