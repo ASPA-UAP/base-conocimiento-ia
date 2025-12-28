@@ -1,3 +1,4 @@
-streamlit==1.37.1
-openai==1.47.0
-psycopg[binary]==3.2.1
+streamlit
+openai
+psycopg2-binary
+
