@@ -1,3 +1,4 @@
+from pypdf import PdfReader
 import os
 import re
 import datetime as dt
@@ -59,6 +60,14 @@ def chunk_text(text: str, max_chars: int = 2000):
         chunks.append(chunk)
         i += max_chars
     return chunks
+
+def extract_text_from_pdf(uploaded_file):
+    reader = PdfReader(uploaded_file)
+    text = ""
+    for page in reader.pages:
+        if page.extract_text():
+            text += page.extract_text() + "\n"
+    return text
 
 def embed_text(text: str):
     """
@@ -186,6 +195,11 @@ tab1, tab2 = st.tabs(["1) Añadir contenido", "2) Consultar"])
 
 with tab1:
     st.subheader("Añadir documentos / noticias (pegando texto)")
+uploaded_pdf = st.file_uploader(
+    "O subir un PDF",
+    type=["pdf"],
+    accept_multiple_files=False
+)
 
     col1, col2 = st.columns(2)
     with col1:
@@ -196,6 +210,9 @@ with tab1:
         fuente = st.text_input("Fuente / URL (opcional)", placeholder="https://...")
 
     texto = st.text_area("Pega aquí el texto completo", height=250)
+if uploaded_pdf is not None:
+    texto = extract_text_from_pdf(uploaded_pdf)
+    st.info("Texto extraído automáticamente del PDF")
 
     if st.button("Guardar en la base"):
         if not titulo or not texto.strip():
