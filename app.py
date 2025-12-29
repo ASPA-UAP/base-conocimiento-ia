@@ -200,7 +200,6 @@ uploaded_pdf = st.file_uploader(
     type=["pdf"],
     accept_multiple_files=False
 )
-
     col1, col2 = st.columns(2)
     with col1:
         titulo = st.text_input("Título", placeholder="Ej.: Informe C-UAS 2025 / Noticia sobre drones en estadio...")
