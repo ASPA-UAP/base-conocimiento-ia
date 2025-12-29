@@ -36,8 +36,7 @@ def connect_db():
         dbname=DB_NAME,
         user=DB_USER,
         password=DB_PASSWORD,
-        sslmode="require",
-    )
+        )
 
 def clean_text(text: str) -> str:
     text = text.replace("\x00", " ")
