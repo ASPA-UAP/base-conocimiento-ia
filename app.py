@@ -195,15 +195,19 @@ tab1, tab2 = st.tabs(["1) Añadir contenido", "2) Consultar"])
 
 with tab1:
     st.subheader("Añadir documentos / noticias (pegando texto)")
+
 uploaded_pdf = st.file_uploader(
     "O subir un PDF",
     type=["pdf"],
     accept_multiple_files=False
 )
-    col1, col2 = st.columns(2)
+
+col1, col2 = st.columns(2)
+
     with col1:
         titulo = st.text_input("Título", placeholder="Ej.: Informe C-UAS 2025 / Noticia sobre drones en estadio...")
         tipo = st.selectbox("Tipo", ["noticia", "normativa", "informe", "guia", "jurisprudencia", "otro"])
+    
     with col2:
         fecha_documento = st.date_input("Fecha del documento", value=dt.date.today())
         fuente = st.text_input("Fuente / URL (opcional)", placeholder="https://...")
