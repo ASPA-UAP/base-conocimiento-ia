@@ -196,26 +196,33 @@ tab1, tab2 = st.tabs(["1) Añadir contenido", "2) Consultar"])
 with tab1:
     st.subheader("Añadir documentos / noticias (pegando texto)")
 
-uploaded_pdf = st.file_uploader(
-    "O subir un PDF",
-    type=["pdf"],
-    accept_multiple_files=False
-)
+    uploaded_pdf = st.file_uploader(
+        "O subir un PDF",
+        type=["pdf"],
+        accept_multiple_files=False
+    )
 
-col1, col2 = st.columns(2)
+    col1, col2 = st.columns(2)
 
     with col1:
-        titulo = st.text_input("Título", placeholder="Ej.: Informe C-UAS 2025 / Noticia sobre drones en estadio...")
-        tipo = st.selectbox("Tipo", ["noticia", "normativa", "informe", "guia", "jurisprudencia", "otro"])
-    
+        titulo = st.text_input(
+            "Título",
+            placeholder="Ej.: Informe C-UAS 2025 / Noticia sobre drones en estadio..."
+        )
+        tipo = st.selectbox(
+            "Tipo",
+            ["noticia", "normativa", "informe", "guia", "jurisprudencia", "otro"]
+        )
+
     with col2:
         fecha_documento = st.date_input("Fecha del documento", value=dt.date.today())
         fuente = st.text_input("Fuente / URL (opcional)", placeholder="https://...")
 
     texto = st.text_area("Pega aquí el texto completo", height=250)
-if uploaded_pdf is not None:
-    texto = extract_text_from_pdf(uploaded_pdf)
-    st.info("Texto extraído automáticamente del PDF")
+
+    if uploaded_pdf is not None:
+        texto = extract_text_from_pdf(uploaded_pdf)
+        st.info("Texto extraído automáticamente del PDF")
 
     if st.button("Guardar en la base"):
         if not titulo or not texto.strip():
@@ -226,6 +233,7 @@ if uploaded_pdf is not None:
             st.success(f"Guardado: {len(chunks)} fragmentos indexados.")
 
     st.caption("Consejo: para noticias web, pega el texto y guarda también la URL en 'Fuente'.")
+
 
 with tab2:
     st.subheader("Consulta con IA (responde con citas)")
